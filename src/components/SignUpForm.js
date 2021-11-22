@@ -1,4 +1,4 @@
-const SignUp = ({
+const SignUpForm = ({
   username,
   setUsername,
   email,
@@ -38,4 +38,4 @@ const SignUp = ({
   );
 };
 
-export default SignUp;
+export default SignUpForm;
