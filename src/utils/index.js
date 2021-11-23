@@ -26,6 +26,7 @@ export const getUser = async (setUser, navigate) => {
       setUser({
         username: fetchedUser.user.username,
         email: fetchedUser.user.email,
+        token: fetchedUser.token,
       });
       localStorage.setItem(
         'credentials',
@@ -66,7 +67,7 @@ export const fetchSignUp = async (
     const responseObj = await response.json();
     const { username: newUsername, email: newEmail, token } = responseObj;
 
-    setUser({ username: newUsername, email: newEmail });
+    setUser({ username: newUsername, email: newEmail, token });
 
     if (stayLoggedIn)
       localStorage.setItem(
@@ -104,7 +105,7 @@ export const fetchLogIn = async (email, password, setUser, stayLoggedIn) => {
       token,
     } = responseObj;
 
-    setUser({ username: username, email: userEmail });
+    setUser({ username: username, email: userEmail, token });
 
     if (stayLoggedIn)
       localStorage.setItem(

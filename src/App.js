@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  Link as RouterLink,
+  useNavigate,
+} from 'react-router-dom';
+import { AppBar, Link, Toolbar } from '@mui/material';
 
-import LogIn from './pages/LogIn';
 import { getUser, fetchSignUp, fetchLogIn } from './utils';
-import './App.css';
+import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
+
+import './App.css';
+import './styles/navbar.css';
 
 const App = () => {
   const [user, setUser] = useState();
@@ -42,19 +50,42 @@ const App = () => {
 
   return (
     <div className="App">
-      <nav className="navbar">
-        <ul className="navbar__list">
-          <li className="navbar__item">
-            <Link to="/">Home</Link>
-          </li>
-          <li className="navbar__item">
-            <Link to="/login">Log In</Link>
-          </li>
-          <li className="navbar__item">
-            <Link to="/signup">Sign Up</Link>
-          </li>
-        </ul>
-      </nav>
+      <AppBar position="static">
+        <Toolbar>
+          <nav className="navbar">
+            <ul className="navbar__list">
+              <Link
+                className="navbar__link"
+                component={RouterLink}
+                underline="hover"
+                to="/"
+                color="white"
+                sx={{ mr: 'auto' }}
+              >
+                HOME
+              </Link>
+              <Link
+                className="navbar__link"
+                component={RouterLink}
+                underline="hover"
+                to="/login"
+                color="white"
+              >
+                Log In
+              </Link>
+              <Link
+                className="navbar__link"
+                component={RouterLink}
+                underline="hover"
+                to="/signup"
+                color="white"
+              >
+                Sign Up
+              </Link>
+            </ul>
+          </nav>
+        </Toolbar>
+      </AppBar>
 
       <Routes>
         <Route
