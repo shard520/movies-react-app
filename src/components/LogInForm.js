@@ -5,10 +5,10 @@ const LogInForm = ({
   setPass,
   stayLoggedIn,
   setStayLoggedIn,
-  handleLoginSubmit,
+  handleLogInSubmit,
 }) => {
   return (
-    <form onSubmit={handleLoginSubmit}>
+    <form onSubmit={handleLogInSubmit}>
       <label htmlFor="email">Email:</label>
       <input
         id="email"
@@ -31,7 +31,7 @@ const LogInForm = ({
         id="stayLoggedIn"
         type="checkbox"
         value={stayLoggedIn}
-        onClick={setStayLoggedIn(prev => !prev)}
+        onChange={() => setStayLoggedIn(prev => !prev)}
       />
       <button type="submit">Log In</button>
     </form>

@@ -5,6 +5,8 @@ const SignUpForm = ({
   setEmail,
   pass,
   setPass,
+  stayLoggedIn,
+  setStayLoggedIn,
   handleSignUpSubmit,
 }) => {
   return (
@@ -32,6 +34,13 @@ const SignUpForm = ({
         type="password"
         value={pass}
         onChange={e => setPass(e.target.value)}
+      />
+      <input
+        name="stayLoggedIn"
+        id="stayLoggedIn"
+        type="checkbox"
+        value={stayLoggedIn}
+        onChange={() => setStayLoggedIn(prev => !prev)}
       />
       <button type="submit">Sign Up</button>
     </form>

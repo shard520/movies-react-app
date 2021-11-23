@@ -1,17 +1,55 @@
-export const getUser = setUser => {
+export const getUser = async (setUser, navigate) => {
   try {
-    const savedUser = JSON.parse(localStorage.getItem('credentials'));
-    console.log(savedUser.username);
+    const savedUser = localStorage.getItem('credentials');
 
-    if (savedUser) setUser(savedUser.username);
+    if (!savedUser) {
+      navigate('/login');
+      return;
+    }
+
+    const userCreds = JSON.parse(savedUser);
+
+    const response = await fetch(`${process.env.REACT_APP_REST_API}token`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userCreds.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      navigate('/signup');
+      return;
+    } else {
+      const fetchedUser = await response.json();
+
+      setUser({
+        username: fetchedUser.user.username,
+        email: fetchedUser.user.email,
+      });
+      localStorage.setItem(
+        'credentials',
+        JSON.stringify({
+          token: fetchedUser.token,
+          username: fetchedUser.user.username,
+          email: fetchedUser.user.email,
+        })
+      );
+    }
   } catch (err) {
     console.error('💥 💥', err);
   }
 };
 
-export const fetchSignUp = async (username, email, password, setUser) => {
+export const fetchSignUp = async (
+  username,
+  email,
+  password,
+  setUser,
+  stayLoggedIn
+) => {
   try {
-    const response = await fetch('http://localhost:5000/user', {
+    const response = await fetch(`${process.env.REACT_APP_REST_API}user`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -26,17 +64,57 @@ export const fetchSignUp = async (username, email, password, setUser) => {
     if (!response.ok) throw new Error('Error creating new user');
 
     const responseObj = await response.json();
-    const { newUsername = username, token } = responseObj;
+    const { username: newUsername, email: newEmail, token } = responseObj;
 
-    setUser({ username: newUsername });
+    setUser({ username: newUsername, email: newEmail });
 
-    localStorage.setItem(
-      'credentials',
-      JSON.stringify({
-        token: token,
-        username: newUsername,
-      })
-    );
+    if (stayLoggedIn)
+      localStorage.setItem(
+        'credentials',
+        JSON.stringify({
+          token: token,
+          username: newUsername,
+          email: newEmail,
+        })
+      );
+  } catch (err) {
+    console.error('💥 💥', err);
+  }
+};
+
+export const fetchLogIn = async (email, password, setUser, stayLoggedIn) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_REST_API}login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
+
+    if (!response.ok) throw new Error('Error logging in');
+
+    const responseObj = await response.json();
+
+    const {
+      user: { username, email: userEmail },
+      token,
+    } = responseObj;
+
+    setUser({ username: username, email: userEmail });
+
+    if (stayLoggedIn)
+      localStorage.setItem(
+        'credentials',
+        JSON.stringify({
+          token: token,
+          username: username,
+          email: userEmail,
+        })
+      );
   } catch (err) {
     console.error('💥 💥', err);
   }
