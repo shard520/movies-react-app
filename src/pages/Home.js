@@ -1,6 +1,7 @@
 import { Button, Typography } from '@mui/material';
+import CardDeck from '../components/CardDeck';
 
-const Home = ({ user, handleLogOut, handleFetchMovies }) => {
+const Home = ({ user, handleLogOut, handleFetchMovies, data }) => {
   return (
     <div>
       {user && (
@@ -21,6 +22,8 @@ const Home = ({ user, handleLogOut, handleFetchMovies }) => {
       <Button variant="outlined" type="button" onClick={handleFetchMovies}>
         View a list of all movies
       </Button>
+
+      <CardDeck data={data} />
     </div>
   );
 };

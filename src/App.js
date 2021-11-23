@@ -21,6 +21,7 @@ const App = () => {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [stayLoggedIn, setStayLoggedIn] = useState(false);
+  const [data, setData] = useState();
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const App = () => {
   };
 
   const handleFetchMovies = async () => {
-    await fetchMovies();
+    await fetchMovies(setData);
   };
 
   return (
@@ -125,6 +126,7 @@ const App = () => {
               user={user}
               handleLogOut={handleLogOut}
               handleFetchMovies={handleFetchMovies}
+              data={data}
             />
           }
         />

@@ -121,7 +121,7 @@ export const fetchLogIn = async (email, password, setUser, stayLoggedIn) => {
   }
 };
 
-export const fetchMovies = async () => {
+export const fetchMovies = async setData => {
   try {
     const response = await fetch(`${process.env.REACT_APP_REST_API}movie`);
 
@@ -143,6 +143,7 @@ export const fetchMovies = async () => {
     movieList.forEach((movie, i) => (movie.details = tmdbObj[i].results[0]));
 
     console.log(movieList);
+    setData(movieList);
   } catch (err) {
     console.error('💥 💥', err);
   }
