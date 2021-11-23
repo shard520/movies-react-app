@@ -120,3 +120,30 @@ export const fetchLogIn = async (email, password, setUser, stayLoggedIn) => {
     console.error('💥 💥', err);
   }
 };
+
+export const fetchMovies = async () => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_REST_API}movie`);
+
+    if (!response.ok) throw new Error('Error finding movie list');
+    const movieList = await response.json();
+
+    const tmdbResponse = await Promise.all(
+      movieList.map(movie => {
+        return fetch(
+          `https://api.themoviedb.org/3/search/movie?api_key=${
+            process.env.REACT_APP_TMDB_API_KEY
+          }&query=${encodeURIComponent(movie.title)}&include_adult=false`
+        );
+      })
+    );
+
+    const tmdbObj = await Promise.all(tmdbResponse.map(movie => movie.json()));
+
+    movieList.forEach((movie, i) => (movie.details = tmdbObj[i].results[0]));
+
+    console.log(movieList);
+  } catch (err) {
+    console.error('💥 💥', err);
+  }
+};

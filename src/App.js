@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import { AppBar, Link, Toolbar } from '@mui/material';
 
-import { getUser, fetchSignUp, fetchLogIn } from './utils';
+import { getUser, fetchSignUp, fetchLogIn, fetchMovies } from './utils';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
@@ -31,21 +31,22 @@ const App = () => {
   const handleSignUpSubmit = async e => {
     e.preventDefault();
     await fetchSignUp(username, email, pass, setUser);
-
     navigate('/');
   };
 
   const handleLogInSubmit = async e => {
     e.preventDefault();
-
     await fetchLogIn(email, pass, setUser, stayLoggedIn);
-
     navigate('/');
   };
 
   const handleLogOut = () => {
     localStorage.clear();
     navigate('/login');
+  };
+
+  const handleFetchMovies = async () => {
+    await fetchMovies();
   };
 
   return (
@@ -119,7 +120,13 @@ const App = () => {
 
         <Route
           path="/"
-          element={<Home user={user} handleLogOut={handleLogOut} />}
+          element={
+            <Home
+              user={user}
+              handleLogOut={handleLogOut}
+              handleFetchMovies={handleFetchMovies}
+            />
+          }
         />
       </Routes>
     </div>

@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import SignUpForm from '../components/SignUpForm';
 
 const SignUp = ({
@@ -13,6 +14,9 @@ const SignUp = ({
 }) => {
   return (
     <div>
+      <Typography variant="h1" component="div" sx={{ m: 2 }}>
+        Sign Up
+      </Typography>
       <SignUpForm
         username={username}
         setUsername={setUsername}

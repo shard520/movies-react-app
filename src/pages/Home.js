@@ -1,16 +1,26 @@
-const Home = ({ user, handleLogOut }) => {
+import { Button, Typography } from '@mui/material';
+
+const Home = ({ user, handleLogOut, handleFetchMovies }) => {
   return (
     <div>
       {user && (
         <div>
-          <h1>Hello {user.username}</h1>
-          <button type="button" onClick={handleLogOut}>
+          <Typography variant="h1" component="div" sx={{ m: 2 }}>
+            Hello {user.username}
+          </Typography>
+          <Button variant="contained" type="button" onClick={handleLogOut}>
             Log Out
-          </button>
+          </Button>
         </div>
       )}
 
-      <p>Welcome to the movies API.</p>
+      <Typography variant="body1" component="p" sx={{ p: 1 }}>
+        Welcome to the movies API.
+      </Typography>
+
+      <Button variant="outlined" type="button" onClick={handleFetchMovies}>
+        View a list of all movies
+      </Button>
     </div>
   );
 };
