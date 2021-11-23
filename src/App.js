@@ -1,41 +1,98 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import './App.css';
-import SignUpForm from './components/SignUpForm';
-import { getUser, fetchSignUp } from './utils';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 
-function App() {
+import LogIn from './pages/LogIn';
+import { getUser, fetchSignUp, fetchLogIn } from './utils';
+import './App.css';
+import SignUp from './pages/SignUp';
+import Home from './pages/Home';
+
+const App = () => {
   const [user, setUser] = useState();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [stayLoggedIn, setStayLoggedIn] = useState(false);
+  let navigate = useNavigate();
 
   useEffect(() => {
-    getUser(setUser);
+    getUser(setUser, navigate);
+    //eslint-disable-next-line
   }, []);
 
   const handleSignUpSubmit = async e => {
     e.preventDefault();
     await fetchSignUp(username, email, pass, setUser);
+
+    navigate('/');
+  };
+
+  const handleLogInSubmit = async e => {
+    e.preventDefault();
+
+    await fetchLogIn(email, pass, setUser, stayLoggedIn);
+
+    navigate('/');
+  };
+
+  const handleLogOut = () => {
+    localStorage.clear();
+    navigate('/login');
   };
 
   return (
     <div className="App">
-      <h1>{user ? `Welcome ${user}` : 'Enter your details to sign up'}</h1>
-      {!user && (
-        <SignUpForm
-          username={username}
-          setUsername={setUsername}
-          email={email}
-          setEmail={setEmail}
-          pass={pass}
-          setPass={setPass}
-          handleSignUpSubmit={handleSignUpSubmit}
+      <nav className="navbar">
+        <ul className="navbar__list">
+          <li className="navbar__item">
+            <Link to="/">Home</Link>
+          </li>
+          <li className="navbar__item">
+            <Link to="/login">Log In</Link>
+          </li>
+          <li className="navbar__item">
+            <Link to="/signup">Sign Up</Link>
+          </li>
+        </ul>
+      </nav>
+
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            <LogIn
+              email={email}
+              setEmail={setEmail}
+              pass={pass}
+              setPass={setPass}
+              setStayLoggedIn={setStayLoggedIn}
+              handleLogInSubmit={handleLogInSubmit}
+            />
+          }
         />
-      )}
+        <Route
+          path="/signup"
+          element={
+            <SignUp
+              username={username}
+              setUsername={setUsername}
+              email={email}
+              setEmail={setEmail}
+              pass={pass}
+              setPass={setPass}
+              setStayLoggedIn={setStayLoggedIn}
+              handleSignUpSubmit={handleSignUpSubmit}
+            />
+          }
+        />
+
+        <Route
+          path="/"
+          element={<Home user={user} handleLogOut={handleLogOut} />}
+        />
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;
