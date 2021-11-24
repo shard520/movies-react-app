@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import LoadingSpinner from '../components/LoadingSpinner';
 import LogInForm from '../components/LogInForm';
 
 const LogIn = ({
@@ -9,6 +10,7 @@ const LogIn = ({
   stayLoggedIn,
   setStayLoggedIn,
   handleLogInSubmit,
+  isLoading,
 }) => {
   return (
     <div>
@@ -24,6 +26,7 @@ const LogIn = ({
         setStayLoggedIn={setStayLoggedIn}
         handleLogInSubmit={handleLogInSubmit}
       />
+      <LoadingSpinner isLoading={isLoading} />
     </div>
   );
 };

@@ -6,6 +6,7 @@ import { getUser, fetchSignUp, fetchLogIn, fetchMovies } from './utils';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
+import AddMovie from './pages/AddMovie';
 import { NavBar } from './components/NavBar';
 
 import './App.css';
@@ -17,7 +18,9 @@ const App = () => {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [stayLoggedIn, setStayLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState();
+  const [actors, setActors] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,7 +46,13 @@ const App = () => {
   };
 
   const handleFetchMovies = async () => {
+    setIsLoading(true);
     await fetchMovies(setData);
+    setIsLoading(false);
+  };
+
+  const handleAddMovie = async movie => {
+    // await fetchAddMovie(movie);
   };
 
   return (
@@ -65,6 +74,7 @@ const App = () => {
               setPass={setPass}
               setStayLoggedIn={setStayLoggedIn}
               handleLogInSubmit={handleLogInSubmit}
+              isLoading={isLoading}
             />
           }
         />
@@ -80,6 +90,22 @@ const App = () => {
               setPass={setPass}
               setStayLoggedIn={setStayLoggedIn}
               handleSignUpSubmit={handleSignUpSubmit}
+              isLoading={isLoading}
+            />
+          }
+        />
+
+        <Route
+          path="/add-movie"
+          element={
+            <AddMovie
+              user={user}
+              handleLogOut={handleLogOut}
+              handleAddMovie={handleAddMovie}
+              isLoading={isLoading}
+              data={data}
+              actors={actors}
+              setActors={setActors}
             />
           }
         />
@@ -91,6 +117,7 @@ const App = () => {
               user={user}
               handleLogOut={handleLogOut}
               handleFetchMovies={handleFetchMovies}
+              isLoading={isLoading}
               data={data}
             />
           }

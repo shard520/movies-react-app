@@ -1,4 +1,4 @@
-.auth-form {
+.form {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -6,6 +6,6 @@
   gap: 1.5rem;
 }
 
-.auth-form > .MuiFormControl-root {
+.form > .MuiFormControl-root {
   flex-basis: 100%;
 }

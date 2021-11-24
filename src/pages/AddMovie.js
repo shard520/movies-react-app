@@ -1,8 +1,16 @@
 import { Button, Typography } from '@mui/material';
-import CardDeck from '../components/CardDeck';
+import AddMovieForm from '../components/AddMovieForm';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const Home = ({ user, handleLogOut, handleFetchMovies, data, isLoading }) => {
+const AddMovie = ({
+  user,
+  handleLogOut,
+  handleAddMovie,
+  data,
+  isLoading,
+  actors,
+  setActors,
+}) => {
   return (
     <div>
       {user && (
@@ -20,15 +28,15 @@ const Home = ({ user, handleLogOut, handleFetchMovies, data, isLoading }) => {
         Welcome to the movies API.
       </Typography>
 
-      <Button variant="contained" type="button" onClick={handleFetchMovies}>
-        View a list of all movies
-      </Button>
+      <AddMovieForm
+        handleAddMovie={handleAddMovie}
+        actors={actors}
+        setActors={setActors}
+      />
 
       <LoadingSpinner isLoading={isLoading} />
-
-      <CardDeck data={data} />
     </div>
   );
 };
 
-export default Home;
+export default AddMovie;

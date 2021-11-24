@@ -18,7 +18,7 @@ const LogInForm = ({
 }) => {
   return (
     <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <form className="auth-form" onSubmit={handleLogInSubmit}>
+      <form className="form" onSubmit={handleLogInSubmit}>
         <TextField
           variant="outlined"
           label="Email"

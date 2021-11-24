@@ -12,9 +12,18 @@ export const NavBar = () => {
           underline="hover"
           to="/"
           color="primary.contrastText"
-          sx={{ mr: 'auto' }}
         >
           HOME
+        </Link>
+        <Link
+          className="navbar__link"
+          component={RouterLink}
+          underline="hover"
+          to="/add-movie"
+          color="primary.contrastText"
+          sx={{ mr: 'auto' }}
+        >
+          Add a Movie
         </Link>
         <Link
           className="navbar__link"

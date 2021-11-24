@@ -7,7 +7,7 @@ import {
   TextField,
 } from '@mui/material';
 
-import '../styles/auth-form.css';
+import '../styles/form.css';
 
 const SignUpForm = ({
   username,
@@ -22,7 +22,7 @@ const SignUpForm = ({
 }) => {
   return (
     <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <form className="auth-form" onSubmit={handleSignUpSubmit}>
+      <form className="form" onSubmit={handleSignUpSubmit}>
         <TextField
           variant="outlined"
           label="Username"
