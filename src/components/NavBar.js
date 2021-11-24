@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Link } from '@mui/material';
+import { IconButton, Link, Menu } from '@mui/material';
+import { AccountCircle } from '@mui/icons-material';
+import NotLoggedInMenu from './NotLoggedInMenu';
+import LoggedInMenu from './LoggedInMenu';
 
-export const NavBar = () => {
+const NavBar = ({ user, handleLogOut }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleMenu = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <nav className="navbar">
       <ul className="navbar__list">
@@ -25,25 +38,44 @@ export const NavBar = () => {
         >
           Add a Movie
         </Link>
-        <Link
-          className="navbar__link"
-          component={RouterLink}
-          underline="hover"
-          to="/login"
-          color="primary.contrastText"
+
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleMenu}
+          color="inherit"
         >
-          Log In
-        </Link>
-        <Link
-          className="navbar__link"
-          component={RouterLink}
-          underline="hover"
-          to="/signup"
-          color="primary.contrastText"
+          <AccountCircle />
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
         >
-          Sign Up
-        </Link>
+          {user ? (
+            <LoggedInMenu
+              handleClose={handleClose}
+              handleLogOut={handleLogOut}
+            />
+          ) : (
+            <NotLoggedInMenu handleClose={handleClose} />
+          )}
+        </Menu>
       </ul>
     </nav>
   );
 };
+
+export default NavBar;

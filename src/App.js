@@ -13,7 +13,7 @@ import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 import AddMovie from './pages/AddMovie';
-import { NavBar } from './components/NavBar';
+import NavBar from './components/NavBar';
 
 import './App.css';
 import './styles/navbar.css';
@@ -70,7 +70,7 @@ const App = () => {
     <div className="App">
       <AppBar position="static">
         <Toolbar>
-          <NavBar />
+          <NavBar user={user} handleLogOut={handleLogOut} />
         </Toolbar>
       </AppBar>
 
@@ -111,7 +111,6 @@ const App = () => {
           element={
             <AddMovie
               user={user}
-              handleLogOut={handleLogOut}
               handleAddMovie={handleAddMovie}
               isLoading={isLoading}
               data={data}
@@ -128,7 +127,6 @@ const App = () => {
           element={
             <Home
               user={user}
-              handleLogOut={handleLogOut}
               handleFetchMovies={handleFetchMovies}
               isLoading={isLoading}
               data={data}
