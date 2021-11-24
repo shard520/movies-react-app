@@ -92,9 +92,9 @@ const AddMovieForm = ({
             id={'addActorInput'}
           />
         </Box>
-        <Box sx={{ margin: 'auto', width: '100%' }}>
-          {actors &&
-            actors.map((actor, i) => {
+        {actors && actors.length > 0 && (
+          <Box sx={{ margin: 'auto', width: '100%' }}>
+            {actors.map((actor, i) => {
               return (
                 <AddItemsListItem
                   key={i}
@@ -105,7 +105,8 @@ const AddMovieForm = ({
                 />
               );
             })}
-        </Box>
+          </Box>
+        )}
 
         <Box sx={{ width: '100%' }}>
           <AddItem
@@ -117,9 +118,10 @@ const AddMovieForm = ({
             id={'addGenreInput'}
           />
         </Box>
-        <Box sx={{ margin: 'auto', width: '100%' }}>
-          {genres &&
-            genres.map((genre, i) => {
+
+        {genres && genres.length > 0 && (
+          <Box sx={{ margin: 'auto', width: '100%' }}>
+            {genres.map((genre, i) => {
               return (
                 <AddItemsListItem
                   key={i}
@@ -130,10 +132,11 @@ const AddMovieForm = ({
                 />
               );
             })}
-        </Box>
+          </Box>
+        )}
 
         <Box sx={{ width: '100%' }}>
-          <Button variant="contained" type="submit">
+          <Button variant="contained" type="submit" sx={{ p: 2 }}>
             Add Movie
           </Button>
         </Box>
