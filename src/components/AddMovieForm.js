@@ -4,17 +4,23 @@ import { useState } from 'react';
 import AddItem from './AddItem';
 import AddItemsListItem from './AddItemsListItem';
 
-const AddMovieForm = ({ handleAddMovie, actors, setActors }) => {
+const AddMovieForm = ({
+  handleAddMovie,
+  actors,
+  setActors,
+  genres,
+  setGenres,
+}) => {
   const [title, setTitle] = useState('');
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState('');
   const [actor, setActor] = useState('');
-  const [genres, setGenres] = useState([]);
+  const [genre, setGenre] = useState('');
 
   const handleSetActor = e => {
     setActor(e.target.value);
   };
 
-  const handleAddActor = e => {
+  const handleAddActor = () => {
     const arr = [...actors];
     arr.push(actor);
     setActors(arr);
@@ -28,10 +34,30 @@ const AddMovieForm = ({ handleAddMovie, actors, setActors }) => {
     setActors(items);
   };
 
+  const handleSetGenre = e => {
+    setGenre(e.target.value);
+  };
+
+  const handleAddGenre = () => {
+    const arr = [...genres];
+    arr.push(genre);
+    setGenres(arr);
+    setGenre('');
+  };
+
+  const handleDeleteGenre = e => {
+    const id = e.target.id;
+    const items = [...genres];
+    items.splice(id, 1);
+    setGenres(items);
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
     const movie = { title, rating, actors, genres };
     handleAddMovie(movie);
+    setTitle('');
+    setRating('');
   };
 
   return (
@@ -46,6 +72,7 @@ const AddMovieForm = ({ handleAddMovie, actors, setActors }) => {
           value={title}
           onChange={e => setTitle(e.target.value)}
         />
+
         <TextField
           variant="outlined"
           label="Rating (out of 10)"
@@ -54,6 +81,7 @@ const AddMovieForm = ({ handleAddMovie, actors, setActors }) => {
           value={rating}
           onChange={e => setRating(e.target.value)}
         />
+
         <Box sx={{ width: '100%' }}>
           <AddItem
             value={actor}
@@ -65,17 +93,43 @@ const AddMovieForm = ({ handleAddMovie, actors, setActors }) => {
           />
         </Box>
         <Box sx={{ margin: 'auto', width: '100%' }}>
-          {actors.map((actor, i) => {
-            return (
-              <AddItemsListItem
-                key={i}
-                id={i}
-                item={actor}
-                deleteItem={handleDeleteActor}
-                buttonLabel={'delete actor from list'}
-              />
-            );
-          })}
+          {actors &&
+            actors.map((actor, i) => {
+              return (
+                <AddItemsListItem
+                  key={i}
+                  id={i}
+                  item={actor}
+                  deleteItem={handleDeleteActor}
+                  buttonLabel={'delete actor from list'}
+                />
+              );
+            })}
+        </Box>
+
+        <Box sx={{ width: '100%' }}>
+          <AddItem
+            value={genre}
+            setValue={handleSetGenre}
+            submit={handleAddGenre}
+            label={'Genre'}
+            buttonLabel={'add genre to list'}
+            id={'addGenreInput'}
+          />
+        </Box>
+        <Box sx={{ margin: 'auto', width: '100%' }}>
+          {genres &&
+            genres.map((genre, i) => {
+              return (
+                <AddItemsListItem
+                  key={i}
+                  id={i}
+                  item={genre}
+                  deleteItem={handleDeleteGenre}
+                  buttonLabel={'delete genre from list'}
+                />
+              );
+            })}
         </Box>
 
         <Box sx={{ width: '100%' }}>

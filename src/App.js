@@ -2,7 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { AppBar, Toolbar } from '@mui/material';
 
-import { getUser, fetchSignUp, fetchLogIn, fetchMovies } from './utils';
+import {
+  getUser,
+  fetchSignUp,
+  fetchLogIn,
+  fetchMovies,
+  fetchAddMovie,
+} from './utils';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
@@ -21,6 +27,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState();
   const [actors, setActors] = useState([]);
+  const [genres, setGenres] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,7 +59,11 @@ const App = () => {
   };
 
   const handleAddMovie = async movie => {
-    // await fetchAddMovie(movie);
+    setIsLoading(true);
+    await fetchAddMovie(movie, user);
+    setActors([]);
+    setGenres([]);
+    setIsLoading(false);
   };
 
   return (
@@ -106,6 +117,8 @@ const App = () => {
               data={data}
               actors={actors}
               setActors={setActors}
+              genres={genres}
+              setGenres={setGenres}
             />
           }
         />

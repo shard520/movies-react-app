@@ -10,6 +10,8 @@ const AddMovie = ({
   isLoading,
   actors,
   setActors,
+  genres,
+  setGenres,
 }) => {
   return (
     <div>
@@ -28,13 +30,15 @@ const AddMovie = ({
         Welcome to the movies API.
       </Typography>
 
+      <LoadingSpinner isLoading={isLoading} />
+
       <AddMovieForm
         handleAddMovie={handleAddMovie}
         actors={actors}
         setActors={setActors}
+        genres={genres}
+        setGenres={setGenres}
       />
-
-      <LoadingSpinner isLoading={isLoading} />
     </div>
   );
 };

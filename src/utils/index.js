@@ -148,3 +148,29 @@ export const fetchMovies = async setData => {
     console.error('💥 💥', err);
   }
 };
+
+export const fetchAddMovie = async (movie, user) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_REST_API}movie`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify({
+        title: movie.title,
+        rating: movie.rating,
+        actors: movie.actors,
+        genres: movie.genres,
+      }),
+    });
+    console.log(response);
+
+    if (!response.ok) throw new Error('Error adding movie');
+
+    const responseObj = await response.json();
+    console.log({ responseObj });
+  } catch (err) {
+    console.error('💥 💥', err);
+  }
+};
