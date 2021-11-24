@@ -8,7 +8,7 @@ import {
 import { AddCircleOutline } from '@mui/icons-material/';
 import { Box } from '@mui/system';
 
-const AddItem = ({ label, value, setValue, submit, buttonLabel }) => {
+const AddItem = ({ label, value, setValue, submit, buttonLabel, id }) => {
   return (
     <Box
       sx={{
@@ -16,9 +16,9 @@ const AddItem = ({ label, value, setValue, submit, buttonLabel }) => {
       }}
     >
       <FormControl variant="outlined" sx={{ width: '100%' }}>
-        <InputLabel htmlFor="addActorInput">{label}</InputLabel>
+        <InputLabel htmlFor={id}>{label}</InputLabel>
         <OutlinedInput
-          id="addActorInput"
+          id={id}
           label={label}
           value={value}
           onChange={e => setValue(e)}

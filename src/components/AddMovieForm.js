@@ -61,6 +61,7 @@ const AddMovieForm = ({ handleAddMovie, actors, setActors }) => {
             submit={handleAddActor}
             label={'Actor'}
             buttonLabel={'add actor to list'}
+            id={'addActorInput'}
           />
         </Box>
         <Box sx={{ margin: 'auto', width: '100%' }}>

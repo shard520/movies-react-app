@@ -20,7 +20,7 @@ const theme = createTheme({
 const AddItemsListItem = ({ item, deleteItem, buttonLabel }) => {
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ margin: '2 auto' }}>
+      <Box sx={{ mb: 1 }}>
         <FormControl variant="outlined" sx={{ width: '80%' }}>
           <OutlinedInput
             sx={{
