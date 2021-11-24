@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Routes,
-  Route,
-  Link as RouterLink,
-  useNavigate,
-} from 'react-router-dom';
-import { AppBar, Link, Toolbar } from '@mui/material';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { AppBar, Toolbar } from '@mui/material';
 
 import { getUser, fetchSignUp, fetchLogIn, fetchMovies } from './utils';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
+import { NavBar } from './components/NavBar';
 
 import './App.css';
 import './styles/navbar.css';
@@ -22,7 +18,7 @@ const App = () => {
   const [pass, setPass] = useState('');
   const [stayLoggedIn, setStayLoggedIn] = useState(false);
   const [data, setData] = useState();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getUser(setUser, navigate);
@@ -54,38 +50,7 @@ const App = () => {
     <div className="App">
       <AppBar position="static">
         <Toolbar>
-          <nav className="navbar">
-            <ul className="navbar__list">
-              <Link
-                className="navbar__link"
-                component={RouterLink}
-                underline="hover"
-                to="/"
-                color="white"
-                sx={{ mr: 'auto' }}
-              >
-                HOME
-              </Link>
-              <Link
-                className="navbar__link"
-                component={RouterLink}
-                underline="hover"
-                to="/login"
-                color="white"
-              >
-                Log In
-              </Link>
-              <Link
-                className="navbar__link"
-                component={RouterLink}
-                underline="hover"
-                to="/signup"
-                color="white"
-              >
-                Sign Up
-              </Link>
-            </ul>
-          </nav>
+          <NavBar />
         </Toolbar>
       </AppBar>
 

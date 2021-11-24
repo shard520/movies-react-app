@@ -5,11 +5,13 @@ const CardDeck = ({ data }) => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'center',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(325px, 1fr))',
+        gridAutoRows: '1fr',
+        placeItems: 'center',
         gap: '2rem',
+        width: '90%',
+        margin: '2rem auto',
       }}
     >
       {data &&
@@ -19,7 +21,6 @@ const CardDeck = ({ data }) => {
             avgRating={movie.rating}
             actors={movie.actors}
             genres={movie.genres}
-            id={i}
             key={i}
             imgSrc={movie.details.poster_path}
           />

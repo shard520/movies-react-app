@@ -1,25 +1,39 @@
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Card, CardContent, CardMedia, Paper, Typography } from '@mui/material';
+import { ActorList } from './ActorList';
+import { CardDetails } from './CardDetails';
 
-const MovieCard = ({ title, avgRating, actors, genres, id, imgSrc }) => {
+const MovieCard = ({ title, avgRating, actors, genres, imgSrc }) => {
   return (
     <Card
       sx={{
-        maxWidth: 300,
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'center',
+        height: '100%',
+        width: '100%',
       }}
     >
-      <CardContent sx={{ flexBasis: '25%' }}>
-        <Typography variant="h3">{title}</Typography>
-        <CardMedia
-          component="img"
-          height="100%"
-          width="100%"
-          image={`https://image.tmdb.org/t/p/w200${imgSrc}`}
-          alt={`${title} poster`}
-        />
+      <CardContent
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Paper elevation={3} sx={{ borderRadius: '5px' }}>
+          <CardMedia
+            component="img"
+            height="100%"
+            elevation={3}
+            image={`https://image.tmdb.org/t/p/w200${imgSrc}`}
+            alt={`${title} poster`}
+            sx={{ maxWidth: '200px', borderRadius: 'inherit' }}
+          />
+        </Paper>
+        <Typography variant="h3" sx={{ height: '3rem', mb: 3, mt: 3 }}>
+          {title}
+        </Typography>
+        {actors && <ActorList actors={actors} />}
+        <CardDetails avgRating={avgRating} genres={genres} />
       </CardContent>
     </Card>
   );
