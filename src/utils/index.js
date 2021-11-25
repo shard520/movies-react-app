@@ -1,4 +1,4 @@
-export const getUser = async (setUser, navigate) => {
+export const getUser = async (setUser, navigate, setStayLoggedIn) => {
   try {
     const savedUser = localStorage.getItem('credentials');
 
@@ -28,6 +28,11 @@ export const getUser = async (setUser, navigate) => {
         email: fetchedUser.user.email,
         token: fetchedUser.token,
       });
+
+      // Set stayLoggedIn to true because if savedUser exists they must have checked the box on login/signup.
+      // Setting it here allows user update function to respect their initial choice without asking them again.
+      setStayLoggedIn(true);
+
       localStorage.setItem(
         'credentials',
         JSON.stringify({
@@ -85,6 +90,8 @@ export const fetchSignUp = async (
 
 export const fetchLogIn = async (email, password, setUser, stayLoggedIn) => {
   try {
+    console.log({ email }, { password });
+
     const response = await fetch(`${process.env.REACT_APP_REST_API}login`, {
       method: 'POST',
       headers: {
@@ -121,13 +128,40 @@ export const fetchLogIn = async (email, password, setUser, stayLoggedIn) => {
   }
 };
 
-export const fetchUpdateUser = async () => {
-  //
+export const fetchUpdateUser = async (
+  updateObj,
+  user,
+  setUser,
+  stayLoggedIn,
+  currentPass
+) => {
+  const body = updateObj;
+  body.password = currentPass;
+  console.log(body);
+
+  const response = await fetch(`${process.env.REACT_APP_REST_API}user`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${user.token}`,
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) throw new Error('Error updating account info');
+
+  const responseObj = await response.json();
+  console.log(responseObj.doc);
+
+  const password = updateObj.newInfo.password || currentPass;
+  console.log('new/old pass', password);
+
+  await fetchLogIn(responseObj.doc.email, password, setUser, stayLoggedIn);
+  console.log(responseObj.message);
 };
 
 export const fetchMovies = async setData => {
   try {
-    console.log('fetchmovies');
     const response = await fetch(`${process.env.REACT_APP_REST_API}movie`);
 
     if (!response.ok) throw new Error('Error finding movie list');

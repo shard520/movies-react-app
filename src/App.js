@@ -25,6 +25,7 @@ const App = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const [currentPass, setCurrentPass] = useState('');
   const [stayLoggedIn, setStayLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
@@ -33,7 +34,7 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getUser(setUser, navigate);
+    getUser(setUser, navigate, setStayLoggedIn);
     //eslint-disable-next-line
   }, []);
 
@@ -64,10 +65,19 @@ const App = () => {
     navigate('/login');
   };
 
-  const handleAccountSubmit = async () => {
+  const handleAccountSubmit = async e => {
+    e.preventDefault();
     setIsLoading(true);
-    await fetchUpdateUser(setData);
+    const updateObj = {
+      update: { username: user.username },
+      newInfo: { username, email, password: pass },
+    };
+    await fetchUpdateUser(updateObj, user, setUser, stayLoggedIn, currentPass);
     setIsLoading(false);
+    setUsername('');
+    setEmail('');
+    setPass('');
+    setCurrentPass('');
   };
 
   const handleFetchMovies = async () => {
@@ -134,6 +144,8 @@ const App = () => {
               setEmail={setEmail}
               pass={pass}
               setPass={setPass}
+              currentPass={currentPass}
+              setCurrentPass={setCurrentPass}
               handleAccountSubmit={handleAccountSubmit}
               isLoading={isLoading}
             />

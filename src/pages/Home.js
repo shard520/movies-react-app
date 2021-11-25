@@ -12,7 +12,12 @@ const Home = ({ user, handleFetchMovies, data, isLoading }) => {
         Welcome to the movies API.
       </Typography>
 
-      <Button variant="contained" type="button" onClick={handleFetchMovies}>
+      <Button
+        variant="contained"
+        type="button"
+        onClick={handleFetchMovies}
+        sx={{ p: 2 }}
+      >
         View a list of all movies
       </Button>
 

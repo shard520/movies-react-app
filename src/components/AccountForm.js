@@ -9,6 +9,8 @@ const AccountForm = ({
   setEmail,
   pass,
   setPass,
+  currentPass,
+  setCurrentPass,
   handleAccountSubmit,
 }) => {
   return (
@@ -19,7 +21,6 @@ const AccountForm = ({
           label="Update Username"
           id="username"
           type="text"
-          required={true}
           value={username}
           onChange={e => setUsername(e.target.value)}
         />
@@ -28,7 +29,6 @@ const AccountForm = ({
           label="Update Email"
           id="email"
           type="email"
-          required={true}
           value={email}
           onChange={e => setEmail(e.target.value)}
         />
@@ -37,13 +37,21 @@ const AccountForm = ({
           label="Update Password"
           id="password"
           type="password"
-          required={true}
           value={pass}
           onChange={e => setPass(e.target.value)}
         />
+        <TextField
+          variant="outlined"
+          label="Enter Current Password to Confirm"
+          id="currentPassword"
+          type="password"
+          required={true}
+          value={currentPass}
+          onChange={e => setCurrentPass(e.target.value)}
+        />
 
-        <Button variant="contained" type="submit">
-          Sign Up
+        <Button variant="contained" type="submit" sx={{ p: 2 }}>
+          Update Account
         </Button>
       </form>
     </Container>

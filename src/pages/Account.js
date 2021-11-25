@@ -10,6 +10,8 @@ const Account = ({
   setEmail,
   pass,
   setPass,
+  currentPass,
+  setCurrentPass,
   handleAccountSubmit,
   isLoading,
 }) => {
@@ -23,6 +25,8 @@ const Account = ({
         email={email}
         setEmail={setEmail}
         pass={pass}
+        currentPass={currentPass}
+        setCurrentPass={setCurrentPass}
         setPass={setPass}
         handleAccountSubmit={handleAccountSubmit}
       />
