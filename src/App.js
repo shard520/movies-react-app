@@ -11,6 +11,7 @@ import {
   fetchUpdateUser,
   fetchDeleteAccount,
   fetchSearchMovie,
+  fetchEditMovie,
 } from './utils';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
@@ -23,6 +24,7 @@ import './styles/navbar.css';
 import './styles/form.css';
 import Account from './pages/Account';
 import SearchMovie from './pages/SearchMovie';
+import EditMovie from './pages/EditMovie';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -106,8 +108,16 @@ const App = () => {
   };
 
   const handleSearchMovies = async search => {
+    if (!search.type || !search.query) return;
+
     setIsLoading(true);
     await fetchSearchMovie(search, setData);
+    setIsLoading(false);
+  };
+
+  const handleEditMovie = async updateObj => {
+    setIsLoading(true);
+    await fetchEditMovie(updateObj);
     setIsLoading(false);
   };
 
@@ -192,6 +202,24 @@ const App = () => {
               isLoading={isLoading}
               data={data}
               setData={setData}
+            />
+          }
+        />
+        <Route
+          path="/edit-movie"
+          element={
+            <EditMovie
+              user={user}
+              handleSearchMovies={handleSearchMovies}
+              handleEditMovie={handleEditMovie}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              data={data}
+              setData={setData}
+              actors={actors}
+              setActors={setActors}
+              genres={genres}
+              setGenres={setGenres}
             />
           }
         />

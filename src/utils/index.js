@@ -251,6 +251,10 @@ export const fetchSearchMovie = async (search, setData) => {
   }
 };
 
+export const fetchEditMovie = async updateObj => {
+  //
+};
+
 async function getImages(response, setData) {
   let movieList = await response.json();
 
