@@ -1,4 +1,5 @@
-import { Button, Container, TextField } from '@mui/material';
+import { Button, Container, TextField, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 
 import '../styles/form.css';
 
@@ -12,6 +13,7 @@ const AccountForm = ({
   currentPass,
   setCurrentPass,
   handleAccountSubmit,
+  handleDeleteAccount,
 }) => {
   return (
     <Container maxWidth="sm" sx={{ mt: 4 }}>
@@ -53,6 +55,18 @@ const AccountForm = ({
         <Button variant="contained" type="submit" sx={{ p: 2 }}>
           Update Account
         </Button>
+        <Box sx={{ width: '100%' }}>
+          <Button
+            variant="contained"
+            color="error"
+            type="button"
+            sx={{ p: 2 }}
+            onClick={handleDeleteAccount}
+          >
+            DELETE ACCOUNT
+          </Button>
+          <Typography>Warning, this action cannot be undone.</Typography>
+        </Box>
       </form>
     </Container>
   );

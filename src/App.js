@@ -9,6 +9,7 @@ import {
   fetchMovies,
   fetchAddMovie,
   fetchUpdateUser,
+  fetchDeleteAccount,
 } from './utils';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
@@ -80,6 +81,13 @@ const App = () => {
     setCurrentPass('');
   };
 
+  const handleDeleteAccount = async () => {
+    setIsLoading(true);
+    await fetchDeleteAccount(user);
+    setIsLoading(false);
+    navigate('/signup');
+  };
+
   const handleFetchMovies = async () => {
     setIsLoading(true);
     await fetchMovies(setData);
@@ -148,6 +156,7 @@ const App = () => {
               setCurrentPass={setCurrentPass}
               handleAccountSubmit={handleAccountSubmit}
               isLoading={isLoading}
+              handleDeleteAccount={handleDeleteAccount}
             />
           }
         />

@@ -14,6 +14,7 @@ const Account = ({
   setCurrentPass,
   handleAccountSubmit,
   isLoading,
+  handleDeleteAccount,
 }) => {
   return (
     <div>
@@ -29,6 +30,7 @@ const Account = ({
         setCurrentPass={setCurrentPass}
         setPass={setPass}
         handleAccountSubmit={handleAccountSubmit}
+        handleDeleteAccount={handleDeleteAccount}
       />
     </div>
   );

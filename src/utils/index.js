@@ -151,12 +151,28 @@ export const fetchUpdateUser = async (
   if (!response.ok) throw new Error('Error updating account info');
 
   const responseObj = await response.json();
-  console.log(responseObj.doc);
 
   const password = updateObj.newInfo.password || currentPass;
-  console.log('new/old pass', password);
 
   await fetchLogIn(responseObj.doc.email, password, setUser, stayLoggedIn);
+  console.log(responseObj.message);
+};
+
+export const fetchDeleteAccount = async user => {
+  console.log(user);
+
+  const response = await fetch(`${process.env.REACT_APP_REST_API}user`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${user.token}`,
+    },
+    body: JSON.stringify({ username: user.username }),
+  });
+
+  if (!response.ok) throw new Error('Error deleting account');
+
+  const responseObj = await response.json();
   console.log(responseObj.message);
 };
 
