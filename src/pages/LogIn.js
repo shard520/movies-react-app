@@ -17,6 +17,7 @@ const LogIn = ({
       <Typography variant="h1" component="div" sx={{ m: 2 }}>
         Log In
       </Typography>
+      <LoadingSpinner isLoading={isLoading} />
       <LogInForm
         email={email}
         setEmail={setEmail}
@@ -26,7 +27,6 @@ const LogIn = ({
         setStayLoggedIn={setStayLoggedIn}
         handleLogInSubmit={handleLogInSubmit}
       />
-      <LoadingSpinner isLoading={isLoading} />
     </div>
   );
 };

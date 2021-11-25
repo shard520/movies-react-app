@@ -1,20 +1,12 @@
 import { Button, Typography } from '@mui/material';
 import CardDeck from '../components/CardDeck';
+import Greeting from '../components/Greeting';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const Home = ({ user, handleLogOut, handleFetchMovies, data, isLoading }) => {
+const Home = ({ user, handleFetchMovies, data, isLoading }) => {
   return (
     <div>
-      {user && (
-        <div>
-          <Typography variant="h1" component="div" sx={{ m: 2 }}>
-            Hello {user.username}
-          </Typography>
-          <Button variant="outlined" type="button" onClick={handleLogOut}>
-            Log Out
-          </Button>
-        </div>
-      )}
+      <Greeting user={user} />
 
       <Typography variant="body1" component="p" sx={{ p: 1 }}>
         Welcome to the movies API.

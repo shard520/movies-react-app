@@ -19,6 +19,7 @@ const SignUp = ({
       <Typography variant="h1" component="div" sx={{ m: 2 }}>
         Sign Up
       </Typography>
+      <LoadingSpinner isLoading={isLoading} />
       <SignUpForm
         username={username}
         setUsername={setUsername}
@@ -30,7 +31,6 @@ const SignUp = ({
         setStayLoggedIn={setStayLoggedIn}
         handleSignUpSubmit={handleSignUpSubmit}
       />
-      <LoadingSpinner isLoading={isLoading} />
     </div>
   );
 };

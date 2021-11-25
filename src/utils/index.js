@@ -121,8 +121,13 @@ export const fetchLogIn = async (email, password, setUser, stayLoggedIn) => {
   }
 };
 
+export const fetchUpdateUser = async () => {
+  //
+};
+
 export const fetchMovies = async setData => {
   try {
+    console.log('fetchmovies');
     const response = await fetch(`${process.env.REACT_APP_REST_API}movie`);
 
     if (!response.ok) throw new Error('Error finding movie list');
@@ -168,8 +173,7 @@ export const fetchAddMovie = async (movie, user) => {
 
     if (!response.ok) throw new Error('Error adding movie');
 
-    const responseObj = await response.json();
-    console.log({ responseObj });
+    await response.json();
   } catch (err) {
     console.error('💥 💥', err);
   }

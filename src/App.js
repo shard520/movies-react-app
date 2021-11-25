@@ -8,6 +8,7 @@ import {
   fetchLogIn,
   fetchMovies,
   fetchAddMovie,
+  fetchUpdateUser,
 } from './utils';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
@@ -17,15 +18,16 @@ import NavBar from './components/NavBar';
 
 import './App.css';
 import './styles/navbar.css';
+import Account from './pages/Account';
 
 const App = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [stayLoggedIn, setStayLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
   const [actors, setActors] = useState([]);
   const [genres, setGenres] = useState([]);
   const navigate = useNavigate();
@@ -37,19 +39,35 @@ const App = () => {
 
   const handleSignUpSubmit = async e => {
     e.preventDefault();
+    setIsLoading(true);
     await fetchSignUp(username, email, pass, setUser);
+    setIsLoading(false);
+    setUsername('');
+    setEmail('');
+    setPass('');
     navigate('/');
   };
 
   const handleLogInSubmit = async e => {
     e.preventDefault();
+    setIsLoading(true);
     await fetchLogIn(email, pass, setUser, stayLoggedIn);
+    setIsLoading(false);
+    setEmail('');
+    setPass('');
     navigate('/');
   };
 
   const handleLogOut = () => {
     localStorage.clear();
+    setUser(null);
     navigate('/login');
+  };
+
+  const handleAccountSubmit = async () => {
+    setIsLoading(true);
+    await fetchUpdateUser(setData);
+    setIsLoading(false);
   };
 
   const handleFetchMovies = async () => {
@@ -105,7 +123,22 @@ const App = () => {
             />
           }
         />
-
+        <Route
+          path="/account"
+          element={
+            <Account
+              user={user}
+              username={username}
+              setUsername={setUsername}
+              email={email}
+              setEmail={setEmail}
+              pass={pass}
+              setPass={setPass}
+              handleAccountSubmit={handleAccountSubmit}
+              isLoading={isLoading}
+            />
+          }
+        />
         <Route
           path="/add-movie"
           element={

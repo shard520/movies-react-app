@@ -1,12 +1,11 @@
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import AddMovieForm from '../components/AddMovieForm';
+import Greeting from '../components/Greeting';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const AddMovie = ({
   user,
-  handleLogOut,
   handleAddMovie,
-  data,
   isLoading,
   actors,
   setActors,
@@ -15,16 +14,7 @@ const AddMovie = ({
 }) => {
   return (
     <div>
-      {user && (
-        <div>
-          <Typography variant="h1" component="div" sx={{ m: 2 }}>
-            Hello {user.username}
-          </Typography>
-          <Button variant="outlined" type="button" onClick={handleLogOut}>
-            Log Out
-          </Button>
-        </div>
-      )}
+      <Greeting user={user} />
 
       <Typography variant="body1" component="p" sx={{ p: 1 }}>
         Welcome to the movies API.
