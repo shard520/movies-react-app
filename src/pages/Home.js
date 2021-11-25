@@ -1,9 +1,13 @@
 import { Button, Typography } from '@mui/material';
+import { useEffect } from 'react';
 import CardDeck from '../components/CardDeck';
 import Greeting from '../components/Greeting';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const Home = ({ user, handleFetchMovies, data, isLoading }) => {
+const Home = ({ user, handleFetchMovies, data, setData, isLoading }) => {
+  // eslint-disable-next-line
+  useEffect(() => setData(null), []);
+
   return (
     <div>
       <Greeting user={user} />

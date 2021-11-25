@@ -181,24 +181,8 @@ export const fetchMovies = async setData => {
     const response = await fetch(`${process.env.REACT_APP_REST_API}movie`);
 
     if (!response.ok) throw new Error('Error finding movie list');
-    const movieList = await response.json();
 
-    const tmdbResponse = await Promise.all(
-      movieList.map(movie => {
-        return fetch(
-          `https://api.themoviedb.org/3/search/movie?api_key=${
-            process.env.REACT_APP_TMDB_API_KEY
-          }&query=${encodeURIComponent(movie.title)}&include_adult=false`
-        );
-      })
-    );
-
-    const tmdbObj = await Promise.all(tmdbResponse.map(movie => movie.json()));
-
-    movieList.forEach((movie, i) => (movie.details = tmdbObj[i].results[0]));
-
-    console.log(movieList);
-    setData(movieList);
+    await getImages(response, setData);
   } catch (err) {
     console.error('💥 💥', err);
   }
@@ -219,7 +203,6 @@ export const fetchAddMovie = async (movie, user) => {
         genres: movie.genres,
       }),
     });
-    console.log(response);
 
     if (!response.ok) throw new Error('Error adding movie');
 
@@ -228,3 +211,64 @@ export const fetchAddMovie = async (movie, user) => {
     console.error('💥 💥', err);
   }
 };
+
+export const fetchSearchMovie = async (search, setData) => {
+  try {
+    let route = '';
+    let query = '';
+    if (search.type === 'movie') {
+      route = 'findMovie';
+      query = { title: search.query };
+    }
+    if (search.type === 'actor') {
+      route = 'findByActor';
+      query = { actor: search.query };
+    }
+    if (search.type === 'genre') {
+      route = 'findByGenre';
+      query = { genre: search.query };
+    }
+    if (search.type === 'minRating') {
+      route = 'findByRating';
+      query = { rating: search.query };
+    }
+
+    const url = `${process.env.REACT_APP_REST_API}${route}`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(query),
+    });
+
+    if (!response.ok) throw new Error('Error finding movies');
+
+    await getImages(response, setData);
+  } catch (err) {
+    console.error('💥 💥', err);
+  }
+};
+
+async function getImages(response, setData) {
+  let movieList = await response.json();
+
+  if (!Array.isArray(movieList)) movieList = [movieList];
+
+  const tmdbResponse = await Promise.all(
+    movieList.map(movie => {
+      return fetch(
+        `https://api.themoviedb.org/3/search/movie?api_key=${
+          process.env.REACT_APP_TMDB_API_KEY
+        }&query=${encodeURIComponent(movie.title)}&include_adult=false`
+      );
+    })
+  );
+
+  const tmdbObj = await Promise.all(tmdbResponse.map(movie => movie.json()));
+
+  movieList.forEach((movie, i) => (movie.details = tmdbObj[i].results[0]));
+
+  setData(movieList);
+}

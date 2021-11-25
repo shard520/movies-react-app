@@ -34,9 +34,18 @@ const NavBar = ({ user, handleLogOut }) => {
           underline="hover"
           to="/add-movie"
           color="primary.contrastText"
-          sx={{ mr: 'auto' }}
         >
           Add a Movie
+        </Link>
+        <Link
+          className="navbar__link"
+          component={RouterLink}
+          underline="hover"
+          to="/search-movies"
+          color="primary.contrastText"
+          sx={{ mr: 'auto' }}
+        >
+          Search Movies
         </Link>
 
         <IconButton

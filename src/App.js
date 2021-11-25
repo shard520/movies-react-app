@@ -10,6 +10,7 @@ import {
   fetchAddMovie,
   fetchUpdateUser,
   fetchDeleteAccount,
+  fetchSearchMovie,
 } from './utils';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
@@ -19,7 +20,9 @@ import NavBar from './components/NavBar';
 
 import './App.css';
 import './styles/navbar.css';
+import './styles/form.css';
 import Account from './pages/Account';
+import SearchMovie from './pages/SearchMovie';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -102,6 +105,12 @@ const App = () => {
     setIsLoading(false);
   };
 
+  const handleSearchMovies = async search => {
+    setIsLoading(true);
+    await fetchSearchMovie(search, setData);
+    setIsLoading(false);
+  };
+
   return (
     <div className="App">
       <AppBar position="static">
@@ -167,11 +176,22 @@ const App = () => {
               user={user}
               handleAddMovie={handleAddMovie}
               isLoading={isLoading}
-              data={data}
               actors={actors}
               setActors={setActors}
               genres={genres}
               setGenres={setGenres}
+            />
+          }
+        />
+        <Route
+          path="/search-movies"
+          element={
+            <SearchMovie
+              user={user}
+              handleSearchMovies={handleSearchMovies}
+              isLoading={isLoading}
+              data={data}
+              setData={setData}
             />
           }
         />
@@ -184,6 +204,7 @@ const App = () => {
               handleFetchMovies={handleFetchMovies}
               isLoading={isLoading}
               data={data}
+              setData={setData}
             />
           }
         />
