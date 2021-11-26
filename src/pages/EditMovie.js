@@ -17,6 +17,7 @@ const EditMovie = ({
   setActors,
   genres,
   setGenres,
+  handleDeleteMovie,
 }) => {
   const [query, setQuery] = useState('');
 
@@ -29,7 +30,6 @@ const EditMovie = ({
   }, [data]);
 
   const populateForm = () => {
-    console.log(data);
     if (!data) return;
 
     if (data[0].actors) setActors(data[0].actors);
@@ -53,7 +53,8 @@ const EditMovie = ({
       {!data && (
         <Box>
           <Typography variant="body1" component="p" sx={{ p: 1 }}>
-            To edit a movie, first search by title...
+            To edit a movie, first enter the title, then either search to edit
+            the movie details, or press delete to remove the movie.
           </Typography>
           <Container maxWidth="sm" sx={{ mt: 4 }}>
             <form className="form" onSubmit={handleSubmitSearch}>
@@ -78,6 +79,18 @@ const EditMovie = ({
                   Search
                 </Button>
               </Box>
+              <Box sx={{ width: '100%' }}>
+                <Button
+                  variant="contained"
+                  color="error"
+                  type="button"
+                  sx={{ p: 2 }}
+                  onClick={() => handleDeleteMovie(query)}
+                >
+                  DELETE MOVIE
+                </Button>
+                <Typography>Warning, this action cannot be undone.</Typography>
+              </Box>
             </form>
           </Container>
         </Box>
@@ -88,8 +101,8 @@ const EditMovie = ({
       {data && (
         <>
           <Typography variant="body1" component="p" sx={{ p: 1 }}>
-            You are editing:{' '}
-            <span style={{ fontWeight: 'bold' }}>{data[0].title}</span>
+            You are editing:
+            <span style={{ fontWeight: 'bold' }}> {data[0].title}</span>
           </Typography>
           <EditMovieForm
             handleEditMovie={handleEditMovie}
@@ -97,6 +110,8 @@ const EditMovie = ({
             setActors={setActors}
             genres={genres}
             setGenres={setGenres}
+            data={data[0]}
+            setData={setData}
           />
         </>
       )}

@@ -3,6 +3,7 @@ import { Button, Container, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import AddItem from './AddItem';
 import AddItemsListItem from './AddItemsListItem';
+import { compareArr } from '../utils';
 
 const EditMovieForm = ({
   handleEditMovie,
@@ -10,6 +11,8 @@ const EditMovieForm = ({
   setActors,
   genres,
   setGenres,
+  data,
+  setData,
 }) => {
   const [title, setTitle] = useState('');
   const [rating, setRating] = useState('');
@@ -54,10 +57,26 @@ const EditMovieForm = ({
 
   const handleSubmit = e => {
     e.preventDefault();
-    const movie = { title, rating, actors, genres };
-    handleEditMovie(movie);
+    const updatedActors = compareArr(data.actors, actors);
+    const updatedGenres = compareArr(data.genres, genres);
+
+    const updateObj = {
+      update: { title: data.title },
+      newInfo: {
+        title,
+        rating,
+        addActors: updatedActors.newItems,
+        removeActors: updatedActors.oldItems,
+        addGenres: updatedGenres.newItems,
+        removeGenres: updatedGenres.oldItems,
+      },
+    };
+    handleEditMovie(updateObj);
     setTitle('');
     setRating('');
+    setActors([]);
+    setGenres([]);
+    setData(null);
   };
 
   return (

@@ -12,6 +12,7 @@ import {
   fetchDeleteAccount,
   fetchSearchMovie,
   fetchEditMovie,
+  fetchDeleteMovie,
 } from './utils';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
@@ -117,7 +118,13 @@ const App = () => {
 
   const handleEditMovie = async updateObj => {
     setIsLoading(true);
-    await fetchEditMovie(updateObj);
+    await fetchEditMovie(updateObj, user.token);
+    setIsLoading(false);
+  };
+
+  const handleDeleteMovie = async query => {
+    setIsLoading(true);
+    await fetchDeleteMovie({ title: query }, user);
     setIsLoading(false);
   };
 
@@ -220,6 +227,7 @@ const App = () => {
               setActors={setActors}
               genres={genres}
               setGenres={setGenres}
+              handleDeleteMovie={handleDeleteMovie}
             />
           }
         />

@@ -90,8 +90,6 @@ export const fetchSignUp = async (
 
 export const fetchLogIn = async (email, password, setUser, stayLoggedIn) => {
   try {
-    console.log({ email }, { password });
-
     const response = await fetch(`${process.env.REACT_APP_REST_API}login`, {
       method: 'POST',
       headers: {
@@ -137,7 +135,6 @@ export const fetchUpdateUser = async (
 ) => {
   const body = updateObj;
   body.password = currentPass;
-  console.log(body);
 
   const response = await fetch(`${process.env.REACT_APP_REST_API}user`, {
     method: 'PATCH',
@@ -159,8 +156,6 @@ export const fetchUpdateUser = async (
 };
 
 export const fetchDeleteAccount = async user => {
-  console.log(user);
-
   const response = await fetch(`${process.env.REACT_APP_REST_API}user`, {
     method: 'DELETE',
     headers: {
@@ -251,8 +246,46 @@ export const fetchSearchMovie = async (search, setData) => {
   }
 };
 
-export const fetchEditMovie = async updateObj => {
-  //
+export const fetchEditMovie = async (updateObj, token) => {
+  const response = await fetch(`${process.env.REACT_APP_REST_API}movie`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(updateObj),
+  });
+
+  if (!response.ok) throw new Error('Error updating movie info');
+
+  const responseObj = await response.json();
+  console.log(responseObj.message);
+};
+
+export const fetchDeleteMovie = async (queryObj, user) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_REST_API}movie`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify(queryObj),
+    });
+
+    if (!response.ok) throw new Error('Error deleting movie');
+
+    const responseObj = await response.json();
+    console.log(responseObj.message);
+  } catch (err) {
+    console.error('💥 💥', err);
+  }
+};
+
+export const compareArr = (oldArr, newArr) => {
+  const oldItems = oldArr.filter(x => !newArr.includes(x));
+  const newItems = newArr.filter(x => !oldArr.includes(x));
+  return { oldItems, newItems };
 };
 
 async function getImages(response, setData) {
