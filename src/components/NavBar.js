@@ -1,96 +1,92 @@
 import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { IconButton, Link, Menu } from '@mui/material';
+import { IconButton, Menu } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
+import { Box } from '@mui/system';
+import MenuIcon from '@mui/icons-material/Menu';
 import NotLoggedInMenu from './NotLoggedInMenu';
 import LoggedInMenu from './LoggedInMenu';
+import { NavMenu } from './NavMenu';
 
 const NavBar = ({ user, handleLogOut }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [accountAnchorEl, setAccountAnchorEl] = useState(null);
+  const [navAnchorEl, setNavAnchorEl] = useState(null);
+  const accountOpen = Boolean(accountAnchorEl);
+  const navOpen = Boolean(navAnchorEl);
 
-  const handleMenu = event => {
-    setAnchorEl(event.currentTarget);
+  const handleAccountMenu = event => {
+    setAccountAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleAccountClose = () => {
+    setAccountAnchorEl(null);
+  };
+
+  const handleNavMenu = event => {
+    setNavAnchorEl(event.currentTarget);
+  };
+
+  const handleNavClose = () => {
+    setNavAnchorEl(null);
   };
 
   return (
     <nav className="navbar">
       <ul className="navbar__list">
-        <Link
-          className="navbar__link"
-          component={RouterLink}
-          underline="hover"
-          to="/"
-          color="primary.contrastText"
-        >
-          HOME
-        </Link>
-        <Link
-          className="navbar__link"
-          component={RouterLink}
-          underline="hover"
-          to="/add-movie"
-          color="primary.contrastText"
-        >
-          Add a Movie
-        </Link>
-        <Link
-          className="navbar__link"
-          component={RouterLink}
-          underline="hover"
-          to="/search-movies"
-          color="primary.contrastText"
-        >
-          Search Movies
-        </Link>
-        <Link
-          className="navbar__link"
-          component={RouterLink}
-          underline="hover"
-          to="/edit-movie"
-          color="primary.contrastText"
-          sx={{ mr: 'auto' }}
-        >
-          Edit Movie
-        </Link>
+        <Box sx={{ mr: 'auto' }}>
+          <IconButton
+            id="navButton"
+            size="large"
+            aria-label="navigation menu"
+            aria-controls="nav-menu-appbar"
+            aria-haspopup="true"
+            aria-expanded={navOpen ? 'true' : undefined}
+            onClick={handleNavMenu}
+            color="inherit"
+          >
+            <MenuIcon />
+          </IconButton>
 
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="menu-appbar"
-          aria-haspopup="true"
-          onClick={handleMenu}
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <Menu
-          id="menu-appbar"
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          {user ? (
-            <LoggedInMenu
-              handleClose={handleClose}
-              handleLogOut={handleLogOut}
-            />
-          ) : (
-            <NotLoggedInMenu handleClose={handleClose} />
-          )}
-        </Menu>
+          <Menu
+            id="nav-menu-appbar"
+            anchorEl={navAnchorEl}
+            keepMounted
+            open={navOpen}
+            onClose={handleNavClose}
+          >
+            <NavMenu handleNavClose={handleNavClose} />
+          </Menu>
+        </Box>
+
+        <Box>
+          <IconButton
+            id="accountButton"
+            size="large"
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            aria-expanded={accountOpen ? 'true' : undefined}
+            onClick={handleAccountMenu}
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={accountAnchorEl}
+            keepMounted
+            open={accountOpen}
+            onClose={handleAccountClose}
+          >
+            {user ? (
+              <LoggedInMenu
+                handleAccountClose={handleAccountClose}
+                handleLogOut={handleLogOut}
+              />
+            ) : (
+              <NotLoggedInMenu handleAccountClose={handleAccountClose} />
+            )}
+          </Menu>
+        </Box>
       </ul>
     </nav>
   );

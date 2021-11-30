@@ -1,40 +1,53 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { Link, MenuItem } from '@mui/material';
+import {
+  Link,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  MenuList,
+} from '@mui/material';
 import { Logout, ManageAccounts } from '@mui/icons-material';
-import { Box } from '@mui/system';
 
-const LoggedInMenu = ({ handleClose, handleLogOut }) => {
+const LoggedInMenu = ({ handleAccountClose, handleLogOut }) => {
   return (
-    <Box>
-      <MenuItem onClick={handleClose}>
+    <MenuList>
+      <MenuItem onClick={handleAccountClose}>
         <Link
-          className="navbar__link"
           component={RouterLink}
           underline="none"
           to="/account"
-          sx={{ display: 'flex', alignItems: 'center' }}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
         >
-          <ManageAccounts color="primary" sx={{ mr: '1.5rem' }} />
-          My Account
+          <ListItemIcon>
+            <ManageAccounts color="primary" sx={{ marginTop: '-3px' }} />
+          </ListItemIcon>
+          <ListItemText>My Account</ListItemText>
         </Link>
       </MenuItem>
       <MenuItem
         onClick={() => {
-          handleClose();
+          handleAccountClose();
           handleLogOut();
         }}
       >
         <Link
-          className="navbar__link"
           underline="none"
           to="/logout"
-          sx={{ display: 'flex', alignItems: 'center' }}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
         >
-          <Logout color="primary" sx={{ mr: '1.5rem' }} />
-          Logout
+          <ListItemIcon>
+            <Logout color="primary" sx={{ marginTop: '-3px' }} />
+          </ListItemIcon>
+          <ListItemText>Logout</ListItemText>
         </Link>
       </MenuItem>
-    </Box>
+    </MenuList>
   );
 };
 

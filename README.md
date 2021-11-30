@@ -20,15 +20,11 @@ https://sh-movies.netlify.app/
 
 ## Issues
 
-- There's currently a bug which lets you add an empty item to the actors/genres list.
-
 - The MySQL DB is hosted with a free cloud provider and adding a movie with a large list of actors/genres can max out the connection, leading to the movie being added without the complete list of actors/genres.
 
 ---
 
 ## To Do
 
-- Make a menu for the nav links.
-- Fix bug that allows you to add an empty item to the actors/genres list.
 - Tweak some spacings and adjust form layout for mobile.
 - Add a footer with link to the repo.
