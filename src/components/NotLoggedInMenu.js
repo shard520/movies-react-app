@@ -1,36 +1,49 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { Link, MenuItem } from '@mui/material';
+import {
+  Link,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  MenuList,
+} from '@mui/material';
 import { GroupAdd, Login } from '@mui/icons-material';
-import { Box } from '@mui/system';
 
-const NotLoggedInMenu = ({ handleClose }) => {
+const NotLoggedInMenu = ({ handleAccountClose }) => {
   return (
-    <Box>
-      <MenuItem onClick={handleClose}>
+    <MenuList>
+      <MenuItem onClick={handleAccountClose}>
         <Link
-          className="navbar__link"
           component={RouterLink}
           underline="none"
           to="/login"
-          sx={{ display: 'flex', alignItems: 'center' }}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
         >
-          <Login color="primary" sx={{ mr: '1.5rem' }} />
-          Log In
+          <ListItemIcon>
+            <Login color="primary" sx={{ marginTop: '-3px' }} />
+          </ListItemIcon>
+          <ListItemText>Log In</ListItemText>
         </Link>
       </MenuItem>
-      <MenuItem onClick={handleClose}>
+      <MenuItem onClick={handleAccountClose}>
         <Link
-          className="navbar__link"
           component={RouterLink}
           underline="none"
           to="/signup"
-          sx={{ display: 'flex', alignItems: 'center' }}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
         >
-          <GroupAdd color="primary" sx={{ mr: '1.5rem' }} />
-          Sign Up
+          <ListItemIcon>
+            <GroupAdd color="primary" sx={{ marginTop: '-3px' }} />
+          </ListItemIcon>
+          <ListItemText>Sign Up</ListItemText>
         </Link>
       </MenuItem>
-    </Box>
+    </MenuList>
   );
 };
 

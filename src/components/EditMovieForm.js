@@ -24,6 +24,7 @@ const EditMovieForm = ({
   };
 
   const handleAddActor = () => {
+    if (!actor || actor === ' ') return;
     const arr = [...actors];
     arr.push(actor);
     setActors(arr);
@@ -42,6 +43,7 @@ const EditMovieForm = ({
   };
 
   const handleAddGenre = () => {
+    if (!genre || genre === ' ') return;
     const arr = [...genres];
     arr.push(genre);
     setGenres(arr);
